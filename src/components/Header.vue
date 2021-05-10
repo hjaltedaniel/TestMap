@@ -12,7 +12,7 @@
     <span class="link is-info" v-on:click="isSearchView = true">Søg</span>
   </p>
 </nav>
-<FilterView v-if="isFilterView" />
+<FilterView v-on:filterMap="SaveFilters" v-if="isFilterView" />
 </div>
 </template>
 
@@ -25,6 +25,11 @@ export default {
             isFilterView: false,
             isSearchView: false
         };
+    },
+    methods: {
+      SaveFilters (e) {
+          this.$emit('filterMap', e)
+      }
     },
     components: {
         FilterView

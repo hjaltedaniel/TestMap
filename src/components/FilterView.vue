@@ -1,6 +1,14 @@
 <template>
-<div class="container filter-view">
-    <FilterItem v-for="item in filters" :key="item.name" :filter="item"/>
+<div class=" filter-view">
+    <FilterItem v-for="item in filters" :key="item.name" :filter="item" :model="item"/>
+    <div class="level is-mobile">
+        <div class="level-item">
+            <button class="button is-success is-fullwidth filter-button" v-on:click="SaveFilters()">Gem filtre</button>
+        </div>
+        <div class="level-item">
+            <button class="button is-danger is-fullwidth filter-button" v-on:click="ClearFilters()">Ryd filtre</button>
+        </div>
+    </div>
 </div>
 </template>
 
@@ -36,7 +44,7 @@ export default {
             },
             {
               name: "bookable",
-              displayName: "Kan bookes",
+              displayName: "Tidsbestilling kræves",
               isChecked: false
             },
             {
@@ -48,6 +56,12 @@ export default {
       };
     },
   methods: {
+      ClearFilters() {
+          this.filters.forEach((element => element.isChecked = false))
+      },
+      SaveFilters () {
+          this.$emit('filterMap', this.filters)
+      }
   },
   computed: {
   },
@@ -64,12 +78,7 @@ export default {
     z-index: 1001;
     height: 100vh;
     width: 100vw;
+    padding: 2rem;
     background-color: white;
-}
-.field {
-    display: flex;
-}
-.is-divider {
-    margin: 0;
 }
 </style>
