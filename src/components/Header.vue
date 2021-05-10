@@ -12,7 +12,7 @@
     <span class="link is-info" v-on:click="isSearchView = true">Søg</span>
   </p>
 </nav>
-<FilterView v-on:filterMap="SaveFilters" v-if="isFilterView" />
+<FilterView v-on:filterMap="SaveFilters" v-on:clearFilters="ClearFilters" v-if="isFilterView" />
 </div>
 </template>
 
@@ -28,7 +28,12 @@ export default {
     },
     methods: {
       SaveFilters (e) {
-          this.$emit('filterMap', e)
+        this.isFilterView = false;
+        this.$emit('filterMap', e)
+      },
+      ClearFilters () {
+        this.isFilterView = false;
+        this.$emit('clearFilters')
       }
     },
     components: {

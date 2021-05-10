@@ -58,6 +58,7 @@ export default {
   methods: {
       ClearFilters() {
           this.filters.forEach((element => element.isChecked = false))
+          this.$emit('clearFilters')
       },
       SaveFilters () {
           this.$emit('filterMap', this.filters)
