@@ -1,8 +1,10 @@
 <template>
-<div class="map" v-if="isFetching == false">
+<div class="app-container is-flex is-flex-direction-column" v-if="isFetching == false">
   <Header/>
-  <TestMap :centres="centres" v-bind:selectedCenter.sync="selectedCenter"/>
-  <CenterModal v-if="selectedCenter != null" :center="selectedCenter" v-bind:selectedCenter.sync="selectedCenter"/>
+  <div class="map">
+    <TestMap :centres="centres" v-bind:selectedCenter.sync="selectedCenter"/>
+    <CenterModal v-if="selectedCenter != null" :center="selectedCenter" v-bind:selectedCenter.sync="selectedCenter"/>
+  </div>
 </div>
 </template>
 
@@ -39,9 +41,12 @@ import CenterModal from '../components/CenterModal'
   };
 </script>
 <style scoped>
-.map {
+.app-container {
   width: 100vw;
   height: 100vh;
+}
+.map {
+  height: 100%;
 }
 
 #filter-button {
