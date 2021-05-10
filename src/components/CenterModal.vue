@@ -12,6 +12,9 @@
         <p><strong>Type:</strong> {{ center.type }}</p>
         <p><strong>Tidsbestilling påkrævet:</strong> {{ isBookable(center.bookingLink) }}</p><br>
         <p>{{ center.description }}</p><br>
+        <div class="notification is-danger" v-if=isClosed(center.openingHours)>
+          <strong>OBS:</strong> Testcentret er lukket lige nu! Se åbningstider nedenfor.
+        </div>
         <table class="table">
           <tbody>
             <tr :class="{ 'is-selected': isToday(day.day) }" v-for="day in center.openingHours" :key="day.day">
@@ -91,6 +94,53 @@ export default {
       else {
         return false;
       }
+    },
+    isClosed(openingHours) {
+        let now = new Date();
+        let day = null;
+        switch (now.getDay()) {
+        case 0:
+          day = "Sunday";
+          break;
+        case 1:
+          day = "Monday";
+          break;
+        case 2:
+          day = "Tuesday";
+          break;
+        case 3:
+          day = "Wednesday";
+          break;
+        case 4:
+          day = "Thursday";
+          break;
+        case 5:
+          day = "Friday";
+          break;
+        case 6:
+          day = "Saturday";
+      }
+
+      let time = this.FixClock(now.getHours()) + ":" + this.FixClock(now.getMinutes()) + ":" + this.FixClock(now.getSeconds());
+
+      let todayOpeningHours = openingHours.filter(hour => hour.day == day)
+      if(todayOpeningHours.length == 0) {
+        return true
+      }
+      else if(time <= todayOpeningHours[0].timeStart && time <= todayOpeningHours[0].timeEnd) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    },
+    FixClock(num) {
+        if(num <= 9) {
+          return "0" + num;
+        }
+        else {
+          return num;
+        }
     },
     isBookable: function(bool) {
       if(bool != null) {
