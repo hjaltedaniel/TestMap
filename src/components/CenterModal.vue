@@ -14,7 +14,7 @@
         <p>{{ center.description }}</p><br>
         <table class="table">
           <tbody>
-            <tr v-for="day in center.openingHours" :key="day.day">
+            <tr :class="{ 'is-selected': isToday(day.day) }" v-for="day in center.openingHours" :key="day.day">
               <th>{{ convertToDanishDay(day.day) }}</th>
               <td>{{day.timeStart}} - {{day.timeEnd}}</td>
             </tr>
@@ -57,6 +57,39 @@ export default {
           return "Lørdag"
         case "Sunday":
           return "Søndag"
+      }
+    },
+    isToday(d) {
+        let now = new Date();
+        let day = null;
+        switch (now.getDay()) {
+        case 0:
+          day = "Sunday";
+          break;
+        case 1:
+          day = "Monday";
+          break;
+        case 2:
+          day = "Tuesday";
+          break;
+        case 3:
+          day = "Wednesday";
+          break;
+        case 4:
+          day = "Thursday";
+          break;
+        case 5:
+          day = "Friday";
+          break;
+        case 6:
+          day = "Saturday";
+      }
+
+      if(d == day) {
+        return true;
+      }
+      else {
+        return false;
       }
     },
     isBookable: function(bool) {
