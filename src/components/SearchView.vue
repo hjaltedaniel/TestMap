@@ -14,10 +14,6 @@ export default {
   },
       data() {
       return {
-        location: {
-          longitude: null,
-          latitude: null
-        }
       };
     },
   methods: {
@@ -46,15 +42,13 @@ export default {
         element.distance = this.getDistance(55.4172671, 10.3821099, element.latitude, element.longitude)
       });
       return centers;
+    },
+    location: function() {
+      return this.$store.state.location
     }
   },
   components: {
     SearchItem
-  },
-  mounted() {
-  this.$nextTick(function () {
-    navigator.geolocation.getCurrentPosition(this.setPosition);
-  })
   }
 }
 </script>

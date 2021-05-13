@@ -21,50 +21,23 @@ export default {
   },
       data() {
       return {
-          filters: [
-            {
-              name: "openNow",
-              displayName: "Åben nu",
-              isChecked: true
-            },
-            {
-              name: "quickTest",
-              displayName: "Kviktest",
-              isChecked: false
-            },
-            {
-              name: "disabledParking",
-              displayName: "Handicapparkering",
-              isChecked: false
-            },
-            {
-              name: "levelAccess",
-              displayName: "Niveufri adgang",
-              isChecked: false
-            },
-            {
-              name: "bookable",
-              displayName: "Tidsbestilling kræves",
-              isChecked: false
-            },
-            {
-              name: "24hr",
-              displayName: "Døgnåben",
-              isChecked: false
-            }
-          ]
       };
     },
   methods: {
       ClearFilters() {
-          this.filters.forEach((element => element.isChecked = false))
           this.$emit('clearFilters')
+          var filters = this.filters;
+          filters.forEach((element => element.isChecked = false))
+          this.$store.commit('setFilters', filters)
       },
       SaveFilters () {
           this.$emit('filterMap', this.filters)
       }
   },
   computed: {
+    filters: function() {
+      return this.$store.state.filters
+    }
   },
   components: {
       FilterItem
