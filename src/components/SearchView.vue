@@ -1,6 +1,6 @@
 <template>
 <div class="search-view">
-  <SearchItem v-on:click="changeSelectedCenter(item)" v-for="item in distancedCenters" :key="item.id" :center="item"/>
+  <SearchItem v-on:changeSelectedCenter="changeSelectedCenter" v-for="item in distancedCenters" :key="item.id" :center="item"/>
 </div>
 </template>
 
@@ -33,9 +33,8 @@ export default {
       var d = R * c;
       return d;
     },
-    changeSelectedCenter: function (c) {
-      console.log("Click");
-      this.$emit('selectedCenter', c)
+    changeSelectedCenter: function (e) {
+      this.$emit('selectedCenter', e)
     },
   },
   computed: {

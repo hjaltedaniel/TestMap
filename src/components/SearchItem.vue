@@ -1,5 +1,5 @@
 <template>
-<div class="card">
+<div v-on:click="changeSelectedCenter(center)" class="card">
   <header class="card-header">
     <p class="card-header-title is-justify-content-space-between">
       {{center.testcenterName }}
@@ -69,6 +69,9 @@ export default {
         else {
           return num;
         }
+    },
+    changeSelectedCenter: function(c) {
+      this.$emit('changeSelectedCenter', c)
     }
   },
   components: {
