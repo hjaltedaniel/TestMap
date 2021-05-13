@@ -2,8 +2,9 @@
 <div class="app-container is-flex is-flex-direction-column" v-if="isFetching == false">
   <Header v-on:filterMap="FilterMap" v-on:clearFilters="ClearFilters" :centers="centres"/>
   <div class="map">
-    <TestMap :centres="GetCentersToPopulateMap()" v-bind:selectedCenter.sync="selectedCenter"/>
+    <TestMap :centres="GetCentersToPopulateMap()" v-on:showInfo="showInfo = true" v-bind:selectedCenter.sync="selectedCenter"/>
     <CenterModal v-if="selectedCenter != null" :center="selectedCenter" v-bind:selectedCenter.sync="selectedCenter"/>
+    <InfoModal v-if="showInfo" v-on:hideInfo="showInfo = false"/>
   </div>
 </div>
 </template>
@@ -13,22 +14,23 @@ import axios from 'axios';
 import TestMap from '../components/TestMap'
 import Header from '../components/Header'
 import CenterModal from '../components/CenterModal'
+import InfoModal from '../components/InfoModal'
 
   export default {
     data() {
       return {
         isFetching: true,
-        isCenterModalActive: true,
         centres: null,
-        filters: null,
         filteredCenters: null,
-        selectedCenter: null
+        selectedCenter: null,
+        showInfo: false
       };
     },
     components: {
       TestMap,
       CenterModal,
-      Header
+      Header,
+      InfoModal
     },
     methods: {
       FilterMap(e) {
@@ -54,7 +56,6 @@ import CenterModal from '../components/CenterModal'
           }
         });
         this.filteredCenters = filteredCenters;
-        this.filters = e;
       },
       GetCentersToPopulateMap() {
         if(this.filteredCenters != null) {
@@ -155,6 +156,16 @@ import CenterModal from '../components/CenterModal'
           longitude: position.coords.longitude
         })
     }
+    },
+    computed: {
+      filters: function() {
+        return this.$store.state.filters
+      }
+    },
+    watch: {
+      filters: function(val) {
+        this.FilterMap(val);
+      }
     },
     mounted() {
       this.$nextTick(() => {

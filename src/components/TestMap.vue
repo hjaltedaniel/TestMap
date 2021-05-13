@@ -8,8 +8,8 @@
       :attribution="attribution"
     />
     <v-locatecontrol/>
-    <l-control class="leaflet-control-info leaflet-bar leaflet-control" :position="'bottomleft'">
-      <a class="leaflet-bar-part leaflet-bar-part-single" title="Se info om kortet">
+    <l-control  class="leaflet-control-info leaflet-bar leaflet-control" :position="'bottomleft'">
+      <a class="leaflet-bar-part leaflet-bar-part-single" v-on:click="showInfo()" title="Se info om kortet">
         <span class="fas fa-info-circle"></span>
       </a>
     </l-control>
@@ -42,7 +42,6 @@ export default {
         url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         attribution:
           '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-          showInfo: true
       };
   },
   methods: {
@@ -66,6 +65,9 @@ export default {
     },
     changeSelectedCenter: function (c) {
       this.$emit('update:selectedCenter', this.selectedCenter = c)
+    },
+    showInfo() {
+      this.$emit('showInfo')
     }
   },
   computed: {

@@ -9,7 +9,7 @@
     <img src="@/assets/virus.svg"/>
   </h1>
   <p class="grid-nav__item has-text-centered">
-    <span class="link is-info" v-on:click="isSearchView = true, isFilterView = false" v-if="!isSearchView"><i class="fas fa-search"></i></span>
+    <span class="link is-info" style="display: none" v-on:click="isSearchView = true, isFilterView = false" v-if="!isSearchView"><i class="fas fa-search"></i></span>
     <span class="link is-info" v-on:click="isSearchView = false" v-if="isSearchView"><i class="fas fa-times"></i></span>
   </p>
 </nav>
