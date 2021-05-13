@@ -1,10 +1,12 @@
 <template>
 <transition name="fade">
   <div class="modal">
-    <div class="modal-background"></div>
+    <div class="modal-background" v-on:click="removeSelectedCenter()"></div>
     <div class="modal-card is-centered">
       <header class="modal-card-head">
-        <p class="modal-card-title">{{ center.testcenterName }}</p>
+        <p class="modal-card-title" id="testcenterName"> {{ getCenterName(center.testcenterName) }}
+          <span id="ruler"></span>
+        </p>
         <button class="delete" aria-label="close" v-on:click="removeSelectedCenter()"></button>
       </header>
       <section class="modal-card-body">
@@ -15,7 +17,7 @@
         <div class="notification is-danger" v-if=isClosed(center.openingHours)>
           <strong>OBS:</strong> Testcentret er lukket lige nu! Se åbningstider nedenfor.
         </div>
-        <table class="table">
+        <table class="table is-fullwidth">
           <tbody>
             <tr :class="{ 'is-selected': isToday(day.day) }" v-for="day in center.openingHours" :key="day.day">
               <th>{{ convertToDanishDay(day.day) }}</th>
@@ -39,6 +41,12 @@ export default {
   name: 'CenterModal',
   props: {
     center: Object
+  },
+  data() {
+    return {
+      windowWidth: window.innerWidth,
+      centerNameWidth: null
+    }
   },
   methods: {
     removeSelectedCenter: function () {
@@ -149,7 +157,34 @@ export default {
       else {
         return "Nej"
       }
-    }
+    },
+    getCenterName: function(text) {
+      if(this.centerNameWidth != null) {
+        if((this.windowWidth -50) < this.centerNameWidth) {
+          var length = text.length;
+          var factor = this.centerNameWidth / length;
+          var newLength = Math.round((this.windowWidth - 100) / factor);
+          return this.truncateString(text, newLength)
+        }
+        else {
+          return text;
+        }
+        }
+      },
+    truncateString: function (str, num) {
+      if (str.length <= num) {
+        return str
+      }
+        return str.slice(0, num) + '...'
+      }
+  },
+  mounted() {
+  this.$nextTick(function () {
+      var centerName = this.center.testcenterName;
+      var ruler = document.getElementById("ruler");
+      ruler.innerHTML = centerName;
+      this.centerNameWidth = ruler.offsetWidth;
+  })
   },
   computed: {
   }
@@ -164,4 +199,14 @@ export default {
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
 }
+.delete {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+#ruler { 
+  visibility: hidden; 
+  white-space: nowrap; }
 </style>
