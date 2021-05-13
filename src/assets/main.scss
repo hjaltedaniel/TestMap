@@ -10,3 +10,27 @@
         width: inherit;
     }
 }
+
+.marker-cluster-small {
+    background-color: rgba(0, 65, 90, 0.2);
+    color: white;
+    div {
+        background-color: rgba(0, 65, 90, 0.2);
+    }
+}
+
+.marker-cluster-medium {
+    background-color: rgba(0, 65, 90, 0.6);
+    color: white;
+    div {
+        background-color: rgba(0, 65, 90, 0.6);
+    }
+}
+
+.marker-cluster-large {
+    background-color: rgba(0, 65, 90, 1);
+    color: white;
+    div {
+        background-color: rgba(0, 65, 90, 1);
+    }
+}
