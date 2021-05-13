@@ -8,6 +8,11 @@
       :attribution="attribution"
     />
     <v-locatecontrol/>
+    <l-control class="leaflet-control-info leaflet-bar leaflet-control" :position="'bottomleft'">
+      <a class="leaflet-bar-part leaflet-bar-part-single" title="Se info om kortet">
+        <span class="fas fa-info-circle"></span>
+      </a>
+    </l-control>
     <l-marker-cluster>
       <l-marker 
         v-for="centre in centres" 
@@ -23,6 +28,7 @@
 
 <script>
 import { latLng, icon } from "leaflet";
+ 
 export default {
   name: 'TestMap',
   props: {
@@ -35,7 +41,8 @@ export default {
         center: latLng(55.906, 11.041),
         url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         attribution:
-          '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+          showInfo: true
       };
   },
   methods: {
