@@ -1,6 +1,6 @@
 <template>
 <div class="app-container is-flex is-flex-direction-column" v-if="isFetching == false">
-  <Header v-on:filterMap="FilterMap" v-on:clearFilters="ClearFilters"/>
+  <Header v-on:filterMap="FilterMap" v-on:clearFilters="ClearFilters" :centers="centres"/>
   <div class="map">
     <TestMap :centres="GetCentersToPopulateMap()" v-bind:selectedCenter.sync="selectedCenter"/>
     <CenterModal v-if="selectedCenter != null" :center="selectedCenter" v-bind:selectedCenter.sync="selectedCenter"/>

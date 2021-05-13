@@ -25,7 +25,7 @@ export default {
             {
               name: "openNow",
               displayName: "Åben nu",
-              isChecked: false
+              isChecked: true
             },
             {
               name: "quickTest",
