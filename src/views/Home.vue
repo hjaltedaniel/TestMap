@@ -148,11 +148,17 @@ import CenterModal from '../components/CenterModal'
       ClearFilters() {
         this.filters = null;
         this.filteredCenters = null;
-      }
+      },
+      setPosition: function(position) {
+        this.$store.commit('setUserLocation', {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude
+        })
+    }
     },
     mounted() {
       this.$nextTick(() => {
-        //this.$refs.myMap.mapObject.ANY_LEAFLET_MAP_METHOD();
+        navigator.geolocation.getCurrentPosition(this.setPosition);
       });
       axios
         .get('https://covid-19-kort.dk/testcentre.json')
