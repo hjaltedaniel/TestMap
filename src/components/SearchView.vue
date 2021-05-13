@@ -1,6 +1,6 @@
 <template>
 <div class="search-view">
-  <SearchItem v-for="item in centers" :key="item.id" :center="item"/>
+  <SearchItem v-on:click="changeSelectedCenter(item)" v-for="item in distancedCenters" :key="item.id" :center="item"/>
 </div>
 </template>
 
@@ -17,6 +17,9 @@ export default {
       };
     },
   methods: {
+    toRad: function (Value) {
+      return Value * Math.PI / 180;
+    },
     getDistance: function (lat1, lon1, lat2, lon2) {
       var R = 6371; // km
       var dLat = this.toRad(lat2-lat1);
@@ -30,18 +33,18 @@ export default {
       var d = R * c;
       return d;
     },
-    toRad: function (Value) {
-      return Value * Math.PI / 180;
-    }
+    changeSelectedCenter: function (c) {
+      console.log("Click");
+      this.$emit('selectedCenter', c)
+    },
   },
   computed: {
     distancedCenters: function () {
       var centers = this.centers;
-      console.log("Looping");
-      centers.forEach(function (element) {
-        element.distance = this.getDistance(55.4172671, 10.3821099, element.latitude, element.longitude)
+      centers.forEach(center => {
+        center.distance = this.getDistance(this.location.latitude, this.location.longitude, center.latitude, center.longitude)
       });
-      return centers;
+      return centers.sort((a, b) => (a.distance > b.distance) ? 1 : -1);
     },
     location: function() {
       return this.$store.state.location

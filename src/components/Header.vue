@@ -9,12 +9,12 @@
     <img src="@/assets/virus.svg"/>
   </h1>
   <p class="grid-nav__item has-text-centered">
-    <span class="link is-info" style="display: none" v-on:click="isSearchView = true, isFilterView = false" v-if="!isSearchView"><i class="fas fa-search"></i></span>
+    <span class="link is-info" v-on:click="isSearchView = true, isFilterView = false" v-if="!isSearchView"><i class="fas fa-search"></i></span>
     <span class="link is-info" v-on:click="isSearchView = false" v-if="isSearchView"><i class="fas fa-times"></i></span>
   </p>
 </nav>
 <FilterView v-on:filterMap="SaveFilters" v-on:clearFilters="ClearFilters" v-if="isFilterView" />
-<SearchView v-if="isSearchView" :centers="centers.slice(0, 10)" />
+<SearchView v-on:selectedCenter="changeSelectedCenter" v-if="isSearchView" :centers="centers" />
 </div>
 </template>
 
@@ -40,6 +40,10 @@ export default {
       ClearFilters () {
         this.isFilterView = false;
         this.$emit('clearFilters')
+      },
+      changeSelectedCenter(e) {
+        this.isSearchView = false;
+        this.$emit('changeSelectedCenter', e)
       }
     },
     components: {

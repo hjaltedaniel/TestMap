@@ -1,6 +1,6 @@
 <template>
 <div class="app-container is-flex is-flex-direction-column" v-if="isFetching == false">
-  <Header v-on:filterMap="FilterMap" v-on:clearFilters="ClearFilters" :centers="centres"/>
+  <Header v-on:filterMap="FilterMap" v-on:clearFilters="ClearFilters" :centers="centres" v-on:changeSelectedCenter="changeSelectedCenter" v-bind:selectedCenter.sync="selectedCenter"/>
   <div class="map">
     <TestMap :centres="GetCentersToPopulateMap()" v-on:showInfo="showInfo = true" v-bind:selectedCenter.sync="selectedCenter"/>
     <CenterModal v-if="selectedCenter != null" :center="selectedCenter" v-bind:selectedCenter.sync="selectedCenter"/>
@@ -33,6 +33,9 @@ import InfoModal from '../components/InfoModal'
       InfoModal
     },
     methods: {
+      changeSelectedCenter: function(e) {
+        this.selectedCenter = e;
+      },
       FilterMap(e) {
         let filteredCenters = this.centres;
         e.forEach(filter => {
