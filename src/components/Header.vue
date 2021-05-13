@@ -1,14 +1,14 @@
 <template>
 <div>
-  <nav class="level is-mobile header">
-  <p class="level-item has-text-centered">
+  <nav class="grid-nav__container">
+  <p class="grid-nav__item has-text-centered">
     <span class="link is-info" v-on:click="isFilterView = true" v-if="!isFilterView">Filtre</span>
     <span class="link is-info" v-on:click="isFilterView = false" v-if="isFilterView">Luk</span>
   </p>
-  <h1 class="level-item has-text-centered">
-    <a class="link is-info logo">Testkort.dk</a>
+  <h1 class="grid-nav__item has-text-centered">
+    <img src="@/assets/virus.svg"/>
   </h1>
-  <p class="level-item has-text-centered">
+  <p class="grid-nav__item has-text-centered">
     <span class="link is-info" v-on:click="isSearchView = true">Søg</span>
   </p>
 </nav>
@@ -43,7 +43,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import url('https://fonts.googleapis.com/css2?family=Abel&display=swap');
 
 .logo {
     font-family: 'Abel', sans-serif;
@@ -54,5 +53,14 @@ export default {
 }
 .header {
     margin-bottom: 10px !important;
+    height: 100%;
+}
+.grid-nav {
+  &__container {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    align-items: center;
+    height: 75px;
+  }
 }
 </style>
