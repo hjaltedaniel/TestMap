@@ -1,6 +1,6 @@
 <template>
   <l-map ref="testMap" 
-  :center= "userLocation"
+  :center= "getCenter"
   :zoom="zoom"
   style="position: sticky; height: 100%; width: 100%;">
     <l-tile-layer
@@ -71,6 +71,14 @@ export default {
   computed: {
     userLocation: function() {
       return latLng(this.$store.state.location.latitude, this.$store.state.location.longitude)
+    },
+    getCenter() {
+      if(this.userLocation != null) {
+        return this.userLocation
+      } 
+      else {
+        return this.center
+      }
     }
   },
   mounted() {
