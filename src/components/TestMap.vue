@@ -1,7 +1,7 @@
 <template>
   <l-map ref="testMap" 
   :center= "getCenter"
-  :zoom="zoom"
+  :zoom="getZoom"
   style="position: sticky; height: 100%; width: 100%;">
     <l-tile-layer
       :url="url"
@@ -90,6 +90,14 @@ export default {
       } 
       else {
         return this.center
+      }
+    },
+    getZoom() {
+      if(this.userLocation != null) {
+        return 12
+      } 
+      else {
+        return 7
       }
     }
   },

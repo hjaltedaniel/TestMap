@@ -1,6 +1,7 @@
 <template>
 <div class="search-view">
-  <SearchItem v-on:changeSelectedCenter="changeSelectedCenter" v-for="item in distancedCenters" :key="item.id" :center="item"/>
+  <input type="text" class="input" v-model="search" placeholder="Søg..."/>
+  <SearchItem v-on:changeSelectedCenter="changeSelectedCenter" v-for="item in selectCenters " :key="item.id" :center="item"/>
 </div>
 </template>
 
@@ -14,6 +15,7 @@ export default {
   },
       data() {
       return {
+        search: null
       };
     },
   methods: {
@@ -47,6 +49,19 @@ export default {
     },
     location: function() {
       return this.$store.state.location
+    },
+    filteredCenters() {
+      return this.distancedCenters.filter(center => {
+        return center.testcenterName.toLowerCase().includes(this.search.toLowerCase())
+      })
+    },
+    selectCenters() {
+      if(this.search != null) {
+        return this.filteredCenters
+      }
+      else {
+        return this.distancedCenters
+      }
     }
   },
   components: {
