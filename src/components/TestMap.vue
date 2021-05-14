@@ -13,6 +13,16 @@
         <span class="fas fa-info-circle"></span>
       </a>
     </l-control>
+    <l-control  class="leaflet-control-info leaflet-bar leaflet-control is-flex signatur" :position="'bottomright'">
+      <div class="info">
+      <div class="is-flex info__item">
+        <img alt="PCR" title="undefined" src="https://covid-19-kort.dk/img/pcr.png"><span>PCR</span>
+      </div>
+      <div class="is-flex info__item">
+        <img alt="Hurtigtest" title="undefined" src="https://covid-19-kort.dk/img/hurtigtest.png"><span>Hurtigtest</span>
+      </div>
+    </div>
+    </l-control>
     <l-marker-cluster>
       <l-marker 
         v-for="centre in centres" 
@@ -92,4 +102,13 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+.signatur {
+  background-color: white; 
+}
+.info {
+  margin: 10px 10px 0px 10px;
+  &__item {
+    margin-bottom: 10px;
+  }
+}
 </style>

@@ -8,7 +8,7 @@
     </p>
   </header>
   <div class="card-content">
-    <div class="content is-flex is-align-content-center	">
+    <div class="content is-flex is-align-content-center	is-justify-content-space-between">
       <address>{{center.address}}</address>
       <p class="distance has-text-right has-text-weight-bold is-size-5	">{{ Math.round(center.distance * 100)/100 }} km.</p>
     </div>
