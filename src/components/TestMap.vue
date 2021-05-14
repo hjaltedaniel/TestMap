@@ -117,6 +117,9 @@ export default {
   margin: 10px 10px 0px 10px;
   &__item {
     margin-bottom: 10px;
+    img {
+      margin-right: 5px;
+    }
   }
 }
 </style>
