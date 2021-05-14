@@ -11,25 +11,45 @@
       </header>
       <section class="modal-card-body">
         <address>{{center.address}}</address><br>
-        <p><strong>Type:</strong> {{ center.type }}</p>
-        <p><strong>Tidsbestilling påkrævet:</strong> {{ isBookable(center.bookingLink) }}</p><br>
-        <p>{{ center.description }}</p><br>
         <div class="notification is-danger" v-if=isClosed(center.openingHours)>
           <strong>OBS:</strong> Testcentret er lukket lige nu! Se åbningstider nedenfor.
         </div>
+        <p>{{ center.description }}</p>
+        <h1>Faciliteter:</h1>
+        <table class="table is-fullwidth">
+          <tbody>
+            <tr>
+              <th class="has-text-left">Type</th>
+              <td class="has-text-right">{{ center.type }}</td>
+            </tr>
+            <tr>
+              <th class="has-text-left">Tidsbestilling påkrævet</th>
+              <td class="has-text-right">{{ isBookable(center.bookingLink) }}</td>
+            </tr>
+            <tr>
+              <th class="has-text-left">Niveaufri adgang</th>
+              <td class="has-text-right">{{ yesOrNo(center.levelFreeAccess) }}</td>
+            </tr>
+            <tr>
+              <th class="has-text-left">Handicapparkering</th>
+              <td class="has-text-right">{{ yesOrNo(center.disabledParking) }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <h1>Åbningstider:</h1>
         <table class="table is-fullwidth">
           <tbody>
             <tr :class="{ 'is-selected': isToday(day.day) }" v-for="day in center.openingHours" :key="day.day">
-              <th>{{ convertToDanishDay(day.day) }}</th>
-              <td>{{day.timeStart}} - {{day.timeEnd}}</td>
+              <th class="has-text-left">{{ convertToDanishDay(day.day) }}</th>
+              <td class="has-text-right">{{day.timeStart}} - {{day.timeEnd}}</td>
             </tr>
           </tbody>
         </table>
       </section>
-      <footer class="modal-card-foot is-vcentered">
-        <a class="button is-link" target="_blank" :href="center.directionsLink">Navigér til testcenter</a>
-        <a class="button is-link" v-if="center.bookingLink" target="_blank" :href="center.bookingLink">Book tid!</a>
-        <a class="button is-link" target="_blank" v-if="center.waitingTimeLink != null" :href="center.waitingTimeLink">Se ventetid</a>
+      <footer class="modal-card-foot is-flex is-justify-content-flex-start	">
+        <a class="button is-primary" target="_blank" :href="center.directionsLink">Vis vej</a>
+        <a class="button is-primary" v-if="center.bookingLink" target="_blank" :href="center.bookingLink">Book tid</a>
+        <a class="button is-primary" target="_blank" v-if="center.waitingTimeLink != null" :href="center.waitingTimeLink">Se ventetid</a>
       </footer>
     </div>
   </div>
@@ -152,6 +172,14 @@ export default {
     },
     isBookable: function(bool) {
       if(bool != null) {
+        return "Ja"
+      }
+      else {
+        return "Nej"
+      }
+    },
+    yesOrNo: function(bool) {
+      if(bool) {
         return "Ja"
       }
       else {
