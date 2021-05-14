@@ -52,11 +52,6 @@ const store = new Vuex.Store({
         name: "bookable",
         displayName: "Tidsbestilling kræves",
         isChecked: false
-      },
-      {
-        name: "24hr",
-        displayName: "Døgnåben",
-        isChecked: false
       }
     ]
   },

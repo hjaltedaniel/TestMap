@@ -1,9 +1,11 @@
 <template>
-<div class="is-flex is-justify-content-space-between filter-item">
-    <p class="text">
-        {{ filter.displayName }}
+<div class="card filter-item">
+  <header class="card-header">
+    <p class="card-header-title is-justify-content-space-between">
+      {{ filter.displayName }}
+      <vb-switch type="success" size="large" v-model="filter.isChecked"/>
     </p>
-    <vb-switch type="success" size="large" v-model="filter.isChecked"/>
+  </header>
 </div>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-<div class=" filter-view">
+<div class=" filter-view is-flex is-flex-direction-column">
     <FilterItem v-for="item in filters" :key="item.name" :filter="item" :model="item"/>
     <div class="level is-mobile">
         <div class="level-item">

@@ -54,9 +54,6 @@ import InfoModal from '../components/InfoModal'
           else if(filter.name == "bookable" && filter.isChecked == true) {
             filteredCenters = this.FilterByBookable(filteredCenters);
           }
-          else if(filter.name == "24hr" && filter.isChecked == true) {
-            filteredCenters = this.FilterBy24hrOpen(filteredCenters);
-          }
         });
         this.filteredCenters = filteredCenters;
       },

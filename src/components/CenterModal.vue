@@ -14,7 +14,7 @@
         <div class="notification is-danger" v-if=isClosed(center.openingHours)>
           <strong>OBS:</strong> Testcentret er lukket lige nu! Se åbningstider nedenfor.
         </div>
-        <p>{{ center.description }}</p>
+        <p>{{ center.description }}</p><br>
         <h1>Faciliteter:</h1>
         <table class="table is-fullwidth">
           <tbody>
