@@ -37,7 +37,7 @@ export default {
     },
     changeSelectedCenter: function (e) {
       this.$emit('selectedCenter', e)
-    },
+    }
   },
   computed: {
     distancedCenters: function () {
@@ -52,7 +52,7 @@ export default {
     },
     filteredCenters() {
       return this.distancedCenters.filter(center => {
-        return center.testcenterName.toLowerCase().includes(this.search.toLowerCase())
+        return center.testcenterName.toLowerCase().includes(this.search.toLowerCase()) || center.address.toLowerCase().includes(this.search.toLowerCase())
       })
     },
     selectCenters() {
