@@ -15,6 +15,13 @@
           <strong>OBS:</strong> Testcentret er lukket lige nu! Se åbningstider nedenfor.
         </div>
         <p>{{ center.description }}</p><br>
+        <p v-if="center.load != 0">
+          <strong>Estimeret ventetid: </strong>
+          <span v-if="center.load == 1">0-15 minutter</span>
+          <span v-if="center.load == 2">15-30 minutter</span>
+          <span v-if="center.load == 3">30-60 minutter</span>
+          <span v-if="center.load == 4">mere end 60 minutter</span>
+        </p><br>
         <h1>Faciliteter:</h1>
         <table class="table is-fullwidth">
           <tbody>
