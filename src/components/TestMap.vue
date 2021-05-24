@@ -1,7 +1,7 @@
 <template>
   <l-map ref="testMap" 
-  :center= "getCenter"
-  :zoom="getZoom"
+  :center= "center"
+  :zoom="zoom"
   style="position: sticky; height: 100%; width: 100%;">
     <l-tile-layer
       :url="url"
@@ -47,7 +47,7 @@ export default {
   data() {
       return {
         selectedCenter: Object,
-        zoom: 12,
+        zoom: 7,
         center: latLng(55.906, 11.041),
         url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         attribution:
@@ -114,26 +114,13 @@ export default {
   computed: {
     userLocation: function() {
       return latLng(this.$store.state.location.latitude, this.$store.state.location.longitude)
-    },
-    getCenter() {
-      if(this.userLocation != null) {
-        return this.userLocation
-      } 
-      else {
-        return this.center
-      }
-    },
-    getZoom() {
-      if(this.userLocation != null) {
-        return 12
-      } 
-      else {
-        return 7
-      }
     }
   },
   mounted() {
     this.$nextTick(() => {
+      if(this.userLocation != null) {
+        this.$refs.testMap.mapObject.setView(this.userLocation, 12);
+      }
   });
 }
 }

@@ -210,9 +210,11 @@ import InfoModal from '../components/InfoModal'
       },
       enrichtedCenters: function () {
         var centers = this.centres;
-        centers.forEach(center => {
-          center.load = this.getLoad(center)
-        });
+        if(centers != null) {
+          centers.forEach(center => {
+            center.load = this.getLoad(center)
+          });
+        }
         return centers;
       },
     },
@@ -222,9 +224,6 @@ import InfoModal from '../components/InfoModal'
       }
     },
     mounted() {
-      this.$nextTick(() => {
-        navigator.geolocation.getCurrentPosition(this.setPosition);
-      });
       axios
         .get('https://covid-19-kort.dk/testcentre.json')
         .then(response => (this.centres = response.data.centres));
@@ -234,6 +233,9 @@ import InfoModal from '../components/InfoModal'
       axios
         .get('https://api2.storepoint.co/v1/16055d043d2f37/locations')
         .then(response => (this.cphMedCenters = response.data.results.locations, this.isFetching = false));
+      this.$nextTick(() => {
+        navigator.geolocation.getCurrentPosition(this.setPosition);
+      });
     },
   };
 </script>
