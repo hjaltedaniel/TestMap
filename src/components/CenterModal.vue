@@ -10,18 +10,18 @@
         <button class="delete" aria-label="close" v-on:click="removeSelectedCenter()"></button>
       </header>
       <section class="modal-card-body">
-        <address>{{center.address}}</address><br>
-        <div class="notification is-danger" v-if=isClosed(center.openingHours)>
-          <strong>OBS:</strong> Testcentret er lukket lige nu! Se åbningstider nedenfor.
-        </div>
-        <p>{{ center.description }}</p><br>
-        <p v-if="center.load != 0">
-          <strong>Estimeret ventetid: </strong>
+        <span :class="getClass(center.load)" v-if="center.load != null && center.load != 0">
+          <span>Estimeret ventetid: </span>
           <span v-if="center.load == 1">0-15 minutter</span>
           <span v-if="center.load == 2">15-30 minutter</span>
           <span v-if="center.load == 3">30-60 minutter</span>
           <span v-if="center.load == 4">mere end 60 minutter</span>
-        </p><br>
+        </span>
+        <address>{{center.address}}</address><br>
+        <div class="notification is-danger" v-if=isClosed(center.openingHours)>
+          <strong>OBS:</strong> Testcentret er lukket lige nu! Se åbningstider nedenfor.
+        </div>
+        <p>{{ center.description }}</p>
         <h1>Faciliteter:</h1>
         <table class="table is-fullwidth">
           <tbody>
@@ -95,6 +95,18 @@ export default {
           return "Lørdag"
         case "Sunday":
           return "Søndag"
+      }
+    },
+    getClass: function(load) {
+      switch (load) {
+        case 1:
+          return "tag is-success"
+        case 2:
+          return "tag is-warning"
+        case 3:
+          return "tag is-orange"
+        case 4:
+          return "tag is-danger"
       }
     },
     isToday(d) {
@@ -244,4 +256,12 @@ export default {
 #ruler { 
   visibility: hidden; 
   white-space: nowrap; }
+
+.is-orange {
+  background-color: #f4a100;
+  color: white;
+}
+.tag {
+  margin-bottom: 10px;
+}
 </style>
