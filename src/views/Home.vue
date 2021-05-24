@@ -21,6 +21,8 @@ import InfoModal from '../components/InfoModal'
       return {
         isFetching: true,
         centres: null,
+        carelinkCenters: null,
+        cphMedCenters: null,
         filteredCenters: null,
         selectedCenter: null,
         showInfo: false
@@ -37,7 +39,7 @@ import InfoModal from '../components/InfoModal'
         this.selectedCenter = e;
       },
       FilterMap(e) {
-        let filteredCenters = this.centres;
+        let filteredCenters = this.enrichtedCenters;
         e.forEach(filter => {
           if(filter.name == "openNow" && filter.isChecked == true) {
             filteredCenters = this.FilterByOpen(filteredCenters);
@@ -62,7 +64,7 @@ import InfoModal from '../components/InfoModal'
           return this.filteredCenters;
         }
         else {
-          return this.centres;
+          return this.enrichtedCenters;
         }
       },
       FilterByOpen(centers) {
@@ -155,12 +157,64 @@ import InfoModal from '../components/InfoModal'
           latitude: position.coords.latitude,
           longitude: position.coords.longitude
         })
-    }
+      },
+      getLoad : function(center) {
+        var load = null;
+
+        if(center.company == "Carelink") {
+          var carelink = this.carelinkCenters;
+          var centerAddress = center.street + " " + center.streetNumber
+          var clCenter = carelink.filter(c => {
+            return c.Address.includes(centerAddress) || c.Name.includes(center.testcenterName)
+          })
+          if(clCenter[0] != null) {
+            return clCenter[0].Load;
+          }
+          else {
+            return null
+          }
+        }
+        else if(center.company == "Copenhagen Medical") {
+          var cphmed = this.cphMedCenters;
+          var centerAddress2 = center.street + " " + center.streetNumber
+          var cmCenter = cphmed.filter(c => {
+            return c.streetaddress.includes(centerAddress2) || c.name.includes(center.testcenterName)
+          })
+          if(cmCenter[0] != null) {
+            return this.setCphMedLoad(cmCenter[0].description);
+          }
+          else {
+            return null
+          }
+        }
+        else {
+          return load
+        }
+      },
+      setCphMedLoad: function(desc) {
+        switch (desc) {
+          case "🟢 Estimeret kø: 0 - 15 min":
+            return 1
+          case "🟡 Estimeret kø: 15 - 30 min":
+            return 2;
+          case "🔴 Estimeret kø: Mere end 30 min":
+            return 3
+          case "":
+            return null;
+        }
+      }
     },
     computed: {
       filters: function() {
         return this.$store.state.filters
-      }
+      },
+      enrichtedCenters: function () {
+        var centers = this.centres;
+        centers.forEach(center => {
+          center.load = this.getLoad(center)
+        });
+        return centers;
+      },
     },
     watch: {
       filters: function(val) {
@@ -173,7 +227,13 @@ import InfoModal from '../components/InfoModal'
       });
       axios
         .get('https://covid-19-kort.dk/testcentre.json')
-        .then(response => (this.centres = response.data.centres, this.isFetching = false))
+        .then(response => (this.centres = response.data.centres));
+      axios
+        .get('https://fileupload.carelink.dk/activefeed.json')
+        .then(response => (this.carelinkCenters = response.data));
+      axios
+        .get('https://api2.storepoint.co/v1/16055d043d2f37/locations')
+        .then(response => (this.cphMedCenters = response.data.results.locations, this.isFetching = false));
     },
   };
 </script>
