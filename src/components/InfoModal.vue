@@ -6,7 +6,7 @@
     <div class="box has-text-centered	">
       <img src="@/assets/virus.svg" />
       <h1 class="is-uppercase">Testkort webapp</h1>
-      <p class="is-size-7">Version 1.0.0</p><br>
+      <p class="is-size-7">Version 1.1.0</p><br>
       <p>Udvikling og idé af <a href="https://github.com/hjaltedaniel">Hjalte Daniel Hansen</a></p>
       <p>Ikoner og data er lånt fra <a href="https://covid-19-kort.dk">covid-19-kort.dk</a></p><br>
       <p>Spørgsmål og kommentarer kan sendes til <a href="mailto:testkort@hjaltedaniel.io">testkort@hjaltedaniel.io</a></p><br>
