@@ -28,7 +28,7 @@
         v-for="centre in centres" 
         :key="centre.id" 
         :lat-lng="getCoordinates(centre.latitude, centre.longitude)"
-        :icon="getIcon(centre.type)"
+        :icon="getIcon(centre)"
         v-on:click="changeSelectedCenter(centre)"
         >
       </l-marker>
@@ -58,14 +58,45 @@ export default {
     getCoordinates(lat, long) {
       return latLng(lat, long)
     },
-    getIcon(type) {
-      if(type == "Antigen")
-      return icon({
-        iconUrl: "https://covid-19-kort.dk/img/hurtigtest.png",
-        iconSize: [20, 20],
-        iconAnchor: [20, 20]
-      })
-      else if (type == "PCR") {
+    getIcon(center) {
+      if(center.type == "Antigen")
+        if(center.load == 1) {
+          return icon({
+          iconUrl: "/img/hurtigtest-load1.png",
+          iconSize: [25, 25],
+          iconAnchor: [20, 20]
+          })
+        }
+        else if(center.load == 2) {
+          return icon({
+          iconUrl: "/img/hurtigtest-load2.png",
+          iconSize: [25, 25],
+          iconAnchor: [20, 20]
+          })
+        }
+        else if (center.load == 3) {
+          return icon({
+          iconUrl: "/img/hurtigtest-load3.png",
+          iconSize: [25, 25],
+          iconAnchor: [20, 20]
+          })
+        }
+        else if (center.load == 4) {
+          return icon({
+          iconUrl: "/img/hurtigtest-load4.png",
+          iconSize: [25, 25],
+          iconAnchor: [20, 20]
+          })
+        }
+        else {
+        return icon({
+          iconUrl: "https://covid-19-kort.dk/img/hurtigtest.png",
+          iconSize: [20, 20],
+          iconAnchor: [20, 20]
+          })
+        }
+
+      else if (center.type == "PCR") {
         return icon({
         iconUrl: "https://covid-19-kort.dk/img/pcr.png",
         iconSize: [20, 20],
