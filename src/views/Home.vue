@@ -197,7 +197,7 @@ import InfoModal from '../components/InfoModal'
             return 1
           case "🟡 Estimeret kø: 15 - 30 min":
             return 2;
-          case "🔴 Estimeret kø: Mere end 30 min":
+          case "🟠 Estimeret kø: 30 - 60 min":
             return 3
           case "":
             return null;
