@@ -231,7 +231,7 @@ import InfoModal from '../components/InfoModal'
         .get('https://fileupload.carelink.dk/activefeed.json')
         .then(response => (this.carelinkCenters = response.data));
       axios
-        .get('https://api2.storepoint.co/v1/16055d043d2f37/locations')
+        .get('https://api.storepoint.co/v1/1614b4269b6d23/locations')
         .then(response => (this.cphMedCenters = response.data.results.locations, this.isFetching = false));
       this.$nextTick(() => {
         navigator.geolocation.getCurrentPosition(this.setPosition);
